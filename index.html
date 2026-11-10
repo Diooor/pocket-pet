@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f2e8">
+  <meta name="description" content="小日和 - 一款溫暖、可離線遊玩的寵物養成遊戲">
+  <title>小日和｜寵物養成遊戲</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+    <header class="topbar">
+      <div class="brand" aria-label="小日和">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><path d="M16 27c-5.8 0-10.5-3.6-10.5-8.2 0-3.1 2.1-5.4 5-5.4.5-4.2 2.4-7 5.5-7s5 2.8 5.5 7c2.9 0 5 2.3 5 5.4C26.5 23.4 21.8 27 16 27Z"/><circle cx="12.2" cy="16.8" r="1.3"/><circle cx="19.8" cy="16.8" r="1.3"/><path d="M13.2 21c1.9 1 3.7 1 5.6 0"/></svg>
+        </span>
+        <span><strong>小日和</strong><small>POCKET DAYS</small></span>
+      </div>
+
+      <div class="topbar-status">
+        <div class="day-chip" title="遊戲中的日期與時間">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2v3M16 2v3M3.5 9.5h17M5 4.5h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z"/></svg>
+          <span id="gameDay">第 1 天</span><i></i><span id="gameTime">08:00</span>
+        </div>
+        <div class="coin-chip" title="日和幣">
+          <span class="coin-icon" aria-hidden="true">H</span>
+          <strong id="coinCount">120</strong>
+        </div>
+        <button class="icon-button" id="soundButton" type="button" aria-label="關閉音效" title="音效">
+          <svg class="sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+          <svg class="sound-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="m16 9 5 5M21 9l-5 5"/></svg>
+        </button>
+        <button class="icon-button" id="settingsButton" type="button" aria-label="開啟設定" title="設定">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21h-4v-.08A1.7 1.7 0 0 0 9 19.37a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.63 15a1.7 1.7 0 0 0-1.55-1H3v-4h.08A1.7 1.7 0 0 0 4.63 9a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.63a1.7 1.7 0 0 0 1-1.55V3h4v.08A1.7 1.7 0 0 0 15 4.63a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.37 9a1.7 1.7 0 0 0 1.55 1H21v4h-.08A1.7 1.7 0 0 0 19.4 15Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="game-layout">
+      <section class="stage-panel" aria-label="寵物房間">
+        <div class="pet-summary">
+          <div class="pet-title-row">
+            <div>
+              <span class="stage-badge" id="growthBadge">幼年期</span>
+              <h1 id="petNameTitle">小麻糬</h1>
+            </div>
+            <div class="level-badge" aria-label="等級">
+              <span>LV.</span><strong id="levelValue">1</strong>
+            </div>
+          </div>
+          <div class="xp-track" aria-label="經驗值進度">
+            <div class="xp-fill" id="xpFill"></div>
+          </div>
+          <div class="xp-copy"><span id="moodText">今天也想和你一起玩</span><span><b id="xpValue">0</b> / <b id="xpGoal">60</b> XP</span></div>
+        </div>
+
+        <div class="room" id="room">
+          <div class="sky-glow"></div>
+          <div class="wall-art art-one"><span></span><span></span><span></span></div>
+          <div class="wall-art art-two"><span></span></div>
+          <div class="window" aria-hidden="true">
+            <div class="window-sky"><i class="sun-moon"></i><span class="cloud cloud-a"></span><span class="cloud cloud-b"></span><b class="star s1">+</b><b class="star s2">+</b><b class="star s3">+</b></div>
+            <div class="window-frame-v"></div><div class="window-frame-h"></div>
+          </div>
+          <div class="shelf" aria-hidden="true"><span class="book book-a"></span><span class="book book-b"></span><span class="book book-c"></span><span class="plant"><i></i><i></i><i></i></span></div>
+          <div class="lamp" aria-hidden="true"><span class="lamp-shade"></span><span class="lamp-pole"></span><span class="lamp-base"></span></div>
+          <div class="rug" aria-hidden="true"></div>
+          <div class="basket" aria-hidden="true"><span></span></div>
+          <div class="toy-block block-a" aria-hidden="true">A</div>
+          <div class="toy-block block-b" aria-hidden="true">B</div>
+
+          <div class="speech-bubble" id="speechBubble" role="status">早安！今天要一起做什麼？</div>
+          <div class="effect-layer" id="effectLayer" aria-hidden="true"></div>
+
+          <button class="pet-wrap" id="petButton" type="button" aria-label="摸摸小麻糬">
+            <span class="pet-shadow"></span>
+            <svg class="pet pet-cat" id="petCat" viewBox="0 0 300 300" aria-hidden="true">
+              <g class="tail"><path d="M227 195c46 1 51-46 26-58-15-7-26 5-17 17 9 12 17 27-12 33"/></g>
+              <g class="body"><ellipse cx="151" cy="206" rx="78" ry="62"/><path class="belly" d="M108 203c0-33 18-50 43-50s43 17 43 50-18 50-43 50-43-17-43-50Z"/></g>
+              <g class="head"><path d="m83 96 12-58 45 37c8-2 16-2 24 0l43-37 12 61c15 17 22 40 16 65-9 39-42 62-85 62s-77-23-85-62c-6-26 1-50 18-68Z"/><path class="ear-inner" d="m99 78 5-25 22 19ZM201 78l-4-25-22 19Z"/></g>
+              <g class="face"><path class="eye eye-left" d="M107 135c8-8 19-8 27 0-2 11-7 16-14 16s-12-5-13-16Z"/><path class="eye eye-right" d="M167 135c8-8 19-8 27 0-2 11-7 16-14 16s-12-5-13-16Z"/><ellipse class="blush" cx="103" cy="162" rx="13" ry="6"/><ellipse class="blush" cx="199" cy="162" rx="13" ry="6"/><path class="nose" d="m151 151-7 6 7 5 7-5-7-6Z"/><path class="mouth" d="M151 162c-1 11-16 14-21 4M151 162c1 11 16 14 21 4"/></g>
+              <g class="paws"><ellipse cx="106" cy="251" rx="30" ry="17"/><ellipse cx="196" cy="251" rx="30" ry="17"/><path d="M95 250v-8M108 251v-9M184 251v-9M198 250v-8"/></g>
+              <g class="accessory"><path d="M116 199c22 11 48 11 70 0l-6 28c-19 8-39 8-58 0l-6-28Z"/><circle cx="151" cy="218" r="8"/></g>
+            </svg>
+
+            <svg class="pet pet-dog" id="petDog" viewBox="0 0 300 300" aria-hidden="true">
+              <g class="tail"><path d="M225 197c42 4 57-35 34-51-13-9-27 0-20 15 5 11 10 25-17 27"/></g>
+              <g class="body"><ellipse cx="151" cy="207" rx="78" ry="61"/><path class="belly" d="M109 204c0-32 18-49 42-49s42 17 42 49-17 49-42 49-42-17-42-49Z"/></g>
+              <g class="ears"><path d="M95 79c-30-24-51 8-35 47 8 21 25 31 42 22l12-42Z"/><path d="M206 79c30-24 51 8 35 47-8 21-25 31-42 22l-12-42Z"/></g>
+              <g class="head"><path d="M85 99c12-31 37-47 66-47s54 16 66 47c12 31 3 70-21 96-14 15-29 23-45 23s-31-8-45-23c-24-26-33-65-21-96Z"/><path class="dog-patch" d="M88 103c15-32 36-43 55-46-5 29-10 49-29 58-10 5-19 0-26-12Z"/></g>
+              <g class="face"><path class="eye eye-left" d="M106 133c8-8 19-8 27 0-2 11-7 16-14 16s-12-5-13-16Z"/><path class="eye eye-right" d="M168 133c8-8 19-8 27 0-2 11-7 16-14 16s-12-5-13-16Z"/><ellipse class="blush" cx="103" cy="161" rx="13" ry="6"/><ellipse class="blush" cx="199" cy="161" rx="13" ry="6"/><path class="muzzle" d="M122 160c7-16 20-23 29-14 9-9 22-2 29 14 7 17-5 36-29 36s-36-19-29-36Z"/><path class="nose" d="m151 153-10 6 10 8 10-8-10-6Z"/><path class="mouth" d="M151 168c-1 10-14 13-20 5M151 168c1 10 14 13 20 5"/></g>
+              <g class="paws"><ellipse cx="106" cy="251" rx="30" ry="17"/><ellipse cx="196" cy="251" rx="30" ry="17"/><path d="M95 250v-8M108 251v-9M184 251v-9M198 250v-8"/></g>
+              <g class="accessory"><path d="M114 198c24 12 50 12 74 0l-5 29c-20 8-43 8-64 0l-5-29Z"/><circle cx="151" cy="218" r="8"/></g>
+            </svg>
+
+            <svg class="pet pet-rabbit" id="petRabbit" viewBox="0 0 300 300" aria-hidden="true">
+              <g class="tail"><circle cx="226" cy="213" r="26"/></g>
+              <g class="body"><ellipse cx="151" cy="210" rx="75" ry="58"/><path class="belly" d="M111 207c0-31 17-48 40-48s40 17 40 48-17 48-40 48-40-17-40-48Z"/></g>
+              <g class="ears"><path d="M108 92C84 59 88 16 108 12c19-4 29 37 25 77Z"/><path d="M193 92c24-33 20-76 0-80-19-4-29 37-25 77Z"/><path class="ear-inner" d="M112 77c-10-23-8-48-1-50 8-2 13 27 13 51ZM189 77c10-23 8-48 1-50-8-2-13 27-13 51Z"/></g>
+              <g class="head"><path d="M79 117c8-35 35-58 72-58s64 23 72 58c10 42-17 102-72 102S69 159 79 117Z"/></g>
+              <g class="face"><path class="eye eye-left" d="M105 135c8-8 19-8 27 0-2 11-7 16-14 16s-12-5-13-16Z"/><path class="eye eye-right" d="M169 135c8-8 19-8 27 0-2 11-7 16-14 16s-12-5-13-16Z"/><ellipse class="blush" cx="101" cy="164" rx="14" ry="7"/><ellipse class="blush" cx="201" cy="164" rx="14" ry="7"/><path class="nose" d="m151 153-8 6 8 6 8-6-8-6Z"/><path class="mouth" d="M151 165c-1 11-16 14-21 4M151 165c1 11 16 14 21 4"/></g>
+              <g class="paws"><ellipse cx="106" cy="253" rx="31" ry="16"/><ellipse cx="196" cy="253" rx="31" ry="16"/><path d="M94 252v-7M107 253v-8M184 253v-8M198 252v-7"/></g>
+              <g class="accessory"><path d="M115 201c23 11 49 11 72 0l-6 28c-20 8-40 8-60 0l-6-28Z"/><circle cx="151" cy="219" r="8"/></g>
+            </svg>
+          </button>
+
+          <div class="room-hint"><span class="hand-icon">♡</span> 點一下摸摸 <span id="petNameHint">小麻糬</span></div>
+          <div class="sleep-overlay" id="sleepOverlay" aria-hidden="true"><span>Z</span><span>Z</span><span>Z</span></div>
+        </div>
+
+        <div class="stat-grid" aria-label="寵物狀態">
+          <div class="stat-card stat-hunger">
+            <span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 11h16c0 5-3 9-8 9s-8-4-8-9ZM7 4c2 1 2 3 0 4M12 3c2 1 2 3 0 5M17 4c2 1 2 3 0 4"/></svg></span>
+            <span class="stat-copy"><b>飽足</b><small id="hungerLabel">很好</small></span>
+            <span class="stat-value" id="hungerValue">78</span>
+            <span class="stat-track"><i id="hungerBar"></i></span>
+          </div>
+          <div class="stat-card stat-happy">
+            <span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg></span>
+            <span class="stat-copy"><b>心情</b><small id="happyLabel">開心</small></span>
+            <span class="stat-value" id="happyValue">82</span>
+            <span class="stat-track"><i id="happyBar"></i></span>
+          </div>
+          <div class="stat-card stat-energy">
+            <span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m13 2-9 12h7l-1 8 9-12h-7l1-8Z"/></svg></span>
+            <span class="stat-copy"><b>活力</b><small id="energyLabel">精神</small></span>
+            <span class="stat-value" id="energyValue">70</span>
+            <span class="stat-track"><i id="energyBar"></i></span>
+          </div>
+          <div class="stat-card stat-clean">
+            <span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2c3 4 7 8 7 13a7 7 0 0 1-14 0c0-5 4-9 7-13Z"/><path d="M9 16c.7 1.3 1.7 2 3 2"/></svg></span>
+            <span class="stat-copy"><b>清潔</b><small id="cleanLabel">乾淨</small></span>
+            <span class="stat-value" id="cleanValue">86</span>
+            <span class="stat-track"><i id="cleanBar"></i></span>
+          </div>
+        </div>
+
+        <div class="action-dock" aria-label="照顧操作">
+          <button class="action-button feed" type="button" data-action="feed">
+            <span class="action-icon"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 13h18c0 6-3 10-9 10S5 19 5 13ZM8 6c2 1 2 3 0 4M14 4c2 2 2 4 0 6M20 6c2 1 2 3 0 4"/></svg></span>
+            <span><b>餵食</b><small>飽足 +18</small></span>
+            <kbd>1</kbd>
+          </button>
+          <button class="action-button play" type="button" data-action="play">
+            <span class="action-icon"><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="9"/><path d="M8 9c3 2 4 5 5 9M20 8c-4 2-6 5-7 10M6 15c5 0 9 2 12 6"/></svg></span>
+            <span><b>玩耍</b><small>心情 +16</small></span>
+            <kbd>2</kbd>
+          </button>
+          <button class="action-button clean" type="button" data-action="clean">
+            <span class="action-icon"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3c4 5 8 9 8 15a8 8 0 0 1-16 0c0-6 4-10 8-15Z"/><path d="M10 19c1 2 2 3 4 3"/></svg></span>
+            <span><b>洗澡</b><small>清潔 +24</small></span>
+            <kbd>3</kbd>
+          </button>
+          <button class="action-button rest" type="button" data-action="rest">
+            <span class="action-icon"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M22 18a9 9 0 1 1-11-11 7 7 0 0 0 11 11Z"/><path d="m19 5 .7 1.5L21 7l-1.3.5L19 9l-.7-1.5L17 7l1.3-.5L19 5Z"/></svg></span>
+            <span><b id="restButtonLabel">睡覺</b><small id="restButtonHint">活力 +20</small></span>
+            <kbd>4</kbd>
+          </button>
+        </div>
+      </section>
+
+      <aside class="side-panel" id="sidePanel">
+        <nav class="side-tabs" aria-label="側邊功能">
+          <button class="side-tab active" type="button" data-tab="tasks">今日任務<span id="taskDot"></span></button>
+          <button class="side-tab" type="button" data-tab="shop">小舖</button>
+          <button class="side-tab" type="button" data-tab="album">成長冊</button>
+        </nav>
+
+        <div class="tab-page active" id="tasksPage" data-page="tasks">
+          <section class="daily-card">
+            <div class="section-heading"><div><span>DAILY CHECK-IN</span><h2>每日相伴</h2></div><strong id="streakText">連續 1 天</strong></div>
+            <div class="checkin-row" id="checkinRow"></div>
+          </section>
+
+          <section class="quest-section">
+            <div class="section-heading"><div><span>TODAY'S TO-DO</span><h2>今天的小約定</h2></div><small id="questCount">0 / 3</small></div>
+            <div class="quest-list" id="questList"></div>
+          </section>
+
+          <section class="memory-note">
+            <span class="note-pin"></span>
+            <small>今天的回憶</small>
+            <p id="memoryText">我們第一次在這個小房間相遇。</p>
+            <time id="memoryDate"></time>
+          </section>
+        </div>
+
+        <div class="tab-page" id="shopPage" data-page="shop">
+          <div class="section-heading shop-heading"><div><span>HAPPY MARKET</span><h2>日和小舖</h2></div><small>點選購買</small></div>
+          <div class="inventory-strip"><span>背包</span><div id="inventoryList"></div></div>
+          <div class="shop-list" id="shopList"></div>
+        </div>
+
+        <div class="tab-page" id="albumPage" data-page="album">
+          <div class="section-heading album-heading"><div><span>GROWTH ALBUM</span><h2>一起走過的日子</h2></div><small id="albumProgress">1 / 6</small></div>
+          <div class="album-grid" id="albumGrid"></div>
+          <div class="next-milestone" id="nextMilestone"></div>
+        </div>
+      </aside>
+    </main>
+
+    <nav class="mobile-nav" aria-label="行動版導覽">
+      <button class="active" type="button" data-mobile="home"><svg viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z"/></svg><span>小屋</span></button>
+      <button type="button" data-mobile="tasks"><svg viewBox="0 0 24 24"><path d="M9 5h11M9 12h11M9 19h11M4 5h.01M4 12h.01M4 19h.01"/></svg><span>任務</span><i id="mobileTaskDot"></i></button>
+      <button type="button" data-mobile="shop"><svg viewBox="0 0 24 24"><path d="M3 9h18l-1 12H4L3 9ZM7 9a5 5 0 0 1 10 0"/></svg><span>小舖</span></button>
+      <button type="button" data-mobile="album"><svg viewBox="0 0 24 24"><path d="M4 3h13a3 3 0 0 1 3 3v15H7a3 3 0 0 1-3-3V3Z"/><path d="M7 17h13M8 7h8M8 11h6"/></svg><span>成長</span></button>
+    </nav>
+  </div>
+
+  <div class="modal-backdrop active" id="welcomeModal" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+    <div class="welcome-modal">
+      <div class="welcome-visual" aria-hidden="true">
+        <div class="welcome-sun"></div><div class="welcome-hill hill-one"></div><div class="welcome-hill hill-two"></div>
+        <svg viewBox="0 0 220 220"><path class="mini-body" d="M51 139c4-35 32-58 59-58s55 23 59 58c3 32-21 58-59 58s-62-26-59-58Z"/><path class="mini-head" d="m54 97 9-45 34 27c9-3 17-3 26 0l34-27 9 46c11 13 16 30 12 47-7 29-32 47-68 47s-61-18-68-47c-4-18 1-36 12-48Z"/><path class="mini-ear" d="m66 84 4-20 17 14ZM154 84l-4-20-17 14Z"/><path class="mini-eye" d="M80 118c6-6 14-6 20 0-1 8-5 12-10 12s-9-4-10-12ZM120 118c6-6 14-6 20 0-1 8-5 12-10 12s-9-4-10-12Z"/><path class="mini-mouth" d="m110 130-5 4 5 4 5-4-5-4ZM110 138c0 7-9 9-13 3M110 138c0 7 9 9 13 3"/></svg>
+      </div>
+      <div class="welcome-content">
+        <span class="eyebrow">WELCOME HOME</span>
+        <h2 id="welcomeTitle">一段小小的相遇，<br>從今天開始。</h2>
+        <p>選一位新朋友，替牠取個名字。牠會記得你們一起度過的每一天。</p>
+
+        <fieldset class="pet-picker">
+          <legend>選擇夥伴</legend>
+          <label class="pet-choice active"><input type="radio" name="petType" value="cat" checked><span class="choice-face cat-face"><i></i><b></b></span><strong>小貓</strong><small>好奇黏人</small></label>
+          <label class="pet-choice"><input type="radio" name="petType" value="dog"><span class="choice-face dog-face"><i></i><b></b></span><strong>小狗</strong><small>活潑熱情</small></label>
+          <label class="pet-choice"><input type="radio" name="petType" value="rabbit"><span class="choice-face rabbit-face"><i></i><b></b></span><strong>小兔</strong><small>溫柔安靜</small></label>
+        </fieldset>
+
+        <label class="name-field"><span>牠的名字</span><input id="petNameInput" type="text" value="小麻糬" maxlength="8" autocomplete="off"><small><b id="nameCount">3</b> / 8</small></label>
+        <button class="primary-button" id="startButton" type="button">開始一起生活 <span>→</span></button>
+        <small class="save-note">進度會自動保存在這台裝置上</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="settings-modal">
+      <div class="modal-heading"><div><span>SETTINGS</span><h2 id="settingsTitle">遊戲設定</h2></div><button class="icon-button close-modal" type="button" aria-label="關閉設定">×</button></div>
+      <label class="setting-row"><span><b>音效</b><small>照顧與升級提示音</small></span><input type="checkbox" id="soundToggle" checked><i></i></label>
+      <label class="setting-row"><span><b>減少動態效果</b><small>關閉較明顯的彈跳動畫</small></span><input type="checkbox" id="motionToggle"><i></i></label>
+      <label class="setting-row name-setting"><span><b>寵物名字</b><small>最多 8 個字</small></span><input type="text" id="renameInput" maxlength="8"></label>
+      <button class="secondary-button" id="renameButton" type="button">更新名字</button>
+      <div class="settings-divider"></div>
+      <button class="danger-button" id="resetButton" type="button">重新開始遊戲</button>
+      <p class="danger-note">會清除目前寵物與所有遊戲進度。</p>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="offlineModal" role="dialog" aria-modal="true" aria-labelledby="offlineTitle">
+    <div class="offline-modal">
+      <span class="offline-icon"><svg viewBox="0 0 48 48"><path d="M36 30a12 12 0 0 0-18-10 9 9 0 0 0-13 8c0 5 4 9 9 9h22a7 7 0 0 0 0-14"/><path d="M24 8v7M14 12l4 5M34 12l-4 5"/></svg></span>
+      <span class="eyebrow">WELCOME BACK</span>
+      <h2 id="offlineTitle">歡迎回家</h2>
+      <p id="offlineText">你離開的時候，小麻糬睡了一場好覺。</p>
+      <div class="offline-reward"><span class="coin-icon">H</span><strong id="offlineCoins">+0</strong><small>日和幣</small></div>
+      <button class="primary-button" id="offlineButton" type="button">收下並繼續</button>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+  <script src="game.js"></script>
+</body>
+</html>
